@@ -75,6 +75,20 @@
                 //     });
                 //  });
 
+                //AJAX
+                    $.ajax({
+                        url: "https://jsonplaceholder.typicode.com/posts",
+                        dataType: 'json'
+                    }).done((data)=>{
+                            $.each(data, function(i, field){
+                        $("#table1").append('<tr>'+
+                            '<td>'+field.userId+'</td>'+
+                            '<td>'+field.id+'</td>'+
+                            '<td>'+field.title+'</td>'+
+                            '<td>'+field.body+'</td>'+
+                            '</tr>');
+                    });
+                    });
 
             });
         });
