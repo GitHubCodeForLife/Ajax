@@ -24,17 +24,17 @@
         tr:nth-child(even) {
           background-color: #dddddd;
         }
-        </style>
+    </style>
 </head>
 <body>
     <h1>Heading1</h1>
     <button class="btn btn-primary">Click here</button>
     <table id="table1">
         <tr>
-            <th>userID</th>
-            <th>ID</th>
-            <th>title</th>
-            <th>Body</th>
+            <th>name</th>
+            <th>topLevelDomain</th>
+            <th>alpha2Code</th>
+            <th>NativeLanguage</th>
         </tr>
 
     </table>
@@ -64,31 +64,40 @@
                 //         alert("Data: " + data + "\nStatus: " + status);
                 // });
                 //Get Json
-                // $.getJSON("https://jsonplaceholder.typicode.com/posts", function(result){
-                //     $.each(result, function(i, field){
-                //         $("#table1").append('<tr>'+
-                //             '<td>'+field.userId+'</td>'+
-                //             '<td>'+field.id+'</td>'+
-                //             '<td>'+field.title+'</td>'+
-                //             '<td>'+field.body+'</td>'+
-                //             '</tr>');
-                //     });
-                //  });
+                $.getJSON("http://mr80.net/files/2015/09/vietnam_provinces_cities.json", function(result){
+                    $.each(result, function(i, field){
+                       // console.log(field.cities);
+                      /// var districts = JSON.parse(field.cities);
+                        //districts.filter(district=> console.log('hello'));
+                        $("#table1").append('<tr>'+
+                            '<td>'+field.name+'</td>'+
+                            '<td>'+'Quận/Huyện'+'</td>'+
+                            '<td>'+field.title+'</td>'+
+                            '<td>'+field.nativeName+'</td>'+
+                            '</tr>');
+                        for (var property in field.cities){
+                        $("#table1").append('<tr>'+
+                            '<td>'+field.name+'</td>'+
+                            '<td>'+field.cities[property]+'</td>'); 
+                      }
+                    });
+                 });
 
                 //AJAX
-                    $.ajax({
-                        url: "https://jsonplaceholder.typicode.com/posts",
-                        dataType: 'json'
-                    }).done((data)=>{
-                            $.each(data, function(i, field){
-                        $("#table1").append('<tr>'+
-                            '<td>'+field.userId+'</td>'+
-                            '<td>'+field.id+'</td>'+
-                            '<td>'+field.title+'</td>'+
-                            '<td>'+field.body+'</td>'+
-                            '</tr>');
-                    });
-                    });
+                    // $.ajax({
+                    //     url: "https://jsonplaceholder.typicode.com/posts",    
+                    //     url: "https://thongtindoanhnghiep.co/api/city",
+                    //     dataType: 'json'
+                    // }).done((data)=>{
+                    //         $.each(data, function(i, field){
+                    //     $("#table1").append('<tr>'+
+                    //         '<td>'+field.Title+'</td>'+
+                    //         '<td>'+field.topLevelDomain+'</td>'+
+                    //         '<td>'+field.alpha2Code+'</td>'+
+                    //         '<td>'+field.nativeName+'</td>'+
+                    //         '</tr>');
+                    // });
+                    // });
 
             });
         });
