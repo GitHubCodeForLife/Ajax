@@ -8,42 +8,36 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="icon" type="image/png" href="/favicon.png"/>
     <link rel="icon" type="image/png" href="https://example.com/favicon.png"/>
-    <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-        }
-        
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-        
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-    </style>
+    <link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.min.css">
 </head>
 <body>
-    <h1>Heading1</h1>
-    <button class="btn btn-primary">Click here</button>
-    <table id="table1">
-        <tr>
-            <th>name</th>
-            <th>topLevelDomain</th>
-            <th>alpha2Code</th>
-            <th>NativeLanguage</th>
-        </tr>
+    <h1>Tỉnh thành quận huyện Việt Nam</h1>
+    <div class="row">
+        <div class="col-3">
 
-    </table>
-    <div id="div"></div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <select class="custom-select" id="provins">
+                  <option >Chọn tỉnh/thành</option>
+                </select>
+              </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+
+                <select class="custom-select" id="districts" name="districts">
+                  <option >Chọn Quận/Huyện</option>
+                </select>
+              </div>
+        </div>
+        <div class="col-3">
+           
+        </div>
+    </div>
 
     <script>
-        $(document).ready(()=>{
-            $('.btn').click(()=>{
-                console.log('Hello');   
+        $(document).ready(()=>{   
                 //Load
                 // $('#div1').load('demo_test.html',(responseText, textStatus, xhr)=>{
                 //     if(textStatus == "success")
@@ -69,18 +63,28 @@
                        // console.log(field.cities);
                       /// var districts = JSON.parse(field.cities);
                         //districts.filter(district=> console.log('hello'));
-                        $("#table1").append('<tr>'+
-                            '<td>'+field.name+'</td>'+
-                            '<td>'+'Quận/Huyện'+'</td>'+
-                            '<td>'+field.title+'</td>'+
-                            '<td>'+field.nativeName+'</td>'+
-                            '</tr>');
+                        $('#provins').append('<option value='+i+'>'+field.name+'</option>');
+                        // for (var property in field.cities){
+                        // $("#districts").append('<option>'+field.cities[property]+'</opntion>'); 
+                      //}
+                    });
+                 });
+                 $('#provins').click((e)=>{
+                    var conceptName = $('#provins').val();
+                    console.log(conceptName);
+                    $("#districts option").remove();
+                    $("#districts").append('<option value='+null+'>Chọn Quận / Huyện</opntion>');
+                    $.getJSON("http://mr80.net/files/2015/09/vietnam_provinces_cities.json", function(result){
+                    $.each(result, function(i, field){
+                       // console.log(field.cities);
+                      /// var districts = JSON.parse(field.cities);
+                        //districts.filter(district=> console.log('hello'));
                         for (var property in field.cities){
-                        $("#table1").append('<tr>'+
-                            '<td>'+field.name+'</td>'+
-                            '<td>'+field.cities[property]+'</td>'); 
+                            if(conceptName==i)
+                             $("#districts").append('<option value='+property+'>'+field.cities[property]+'</opntion>'); 
                       }
                     });
+                 });
                  });
 
                 //AJAX
@@ -100,8 +104,6 @@
                     // });
 
             });
-        });
-
     </script>
 </body>
 </html>
